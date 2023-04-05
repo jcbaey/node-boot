@@ -1,0 +1,11 @@
+{
+  "ts-node": {  "files": true }, // Mandatory to support external types like global.d.ts
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "rootDir": "src",
+    "outDir": "build",
+    "esModuleInterop": true,
+    "strict": true,
+  }
+}

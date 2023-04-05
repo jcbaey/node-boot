@@ -1,0 +1,40 @@
+{
+  "name": "project-name",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "rimraf ./build && tsc",
+    "dev": "npx nodemon",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Backend\" -c \"cyan.bold,green.bold\" \"yarn watch-ts\" \"yarn watch-node\"",
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon build/local.js",
+    "start": "pnpm build && node build/local.js",
+    "lint": "eslint . --ext .ts",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "release": "rimraf ./build && esbuild src/index.ts --bundle --minify --sourcemap --platform=node --target=node18 --outfile=build/index.js --metafile=build/meta.json && rimraf index.zip && cd build && zip -r ../index.zip . -x .DS_Store && cd ..",
+    "aws": "pnpm release && aws lambda update-function-code --function-name HttpChatGPTLambda --zip-file fileb://index.zip"
+  },
+  "keywords": [],
+  "author": "Jean-Christophe Baey",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "concurrently": "^7.6.0",
+    "esbuild": "^0.17.14",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.7",
+    "rimraf": "^4.4.1",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
