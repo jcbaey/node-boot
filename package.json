@@ -12,7 +12,7 @@
     "start": "pnpm build && node build/local.js",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "release": "rimraf ./build && esbuild src/index.ts --bundle --minify --sourcemap --platform=node --target=node18 --outfile=build/index.js --metafile=build/meta.json && rimraf index.zip && cd build && zip -r ../index.zip . -x .DS_Store && cd ..",
+    "release": "rimraf ./build && esbuild src/index.ts --external:@aws-sdk/* --external:@types/* --bundle --minify --sourcemap --platform=node --target=node18 --outfile=build/index.js --metafile=build/meta.json && rimraf index.zip && cd build && zip -r ../index.zip . -x .DS_Store && cd ..",
     "aws": "pnpm release && aws lambda update-function-code --function-name HttpChatGPTLambda --zip-file fileb://index.zip"
   },
   "keywords": [],
@@ -35,6 +35,11 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "@types/aws-lambda": "^8.10.114",
+    "@types/qs": "^6.9.7",
+    "aws-lambda": "^1.0.7",
+    "aws-lambda\n": "link:@types/aws-lambda\n",
+    "dotenv": "^16.0.3",
+    "qs": "^6.11.1"
   }
 }
