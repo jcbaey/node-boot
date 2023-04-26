@@ -167,3 +167,8 @@ export function withCors(handler: HandlerFunction) {
     }));
   };
 }
+
+export function getIp(event: APIGatewayProxyEventV2): string {
+  const rawIp = getHeader(event, "x-forwarded-for") || event.requestContext.http.sourceIp;
+  return rawIp.split(",")[0].trim();
+}
