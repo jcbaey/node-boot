@@ -5,20 +5,25 @@ const ERROR_MESSAGES = Object.freeze({
   INVALID_HTTP_VERB: "The verb is not correct.",
 });
 
-export class InvalidEventError extends Error {
-  status: number;
-  constructor(msg?: string) {
-    super(msg || ERROR_MESSAGES.INVALID_EVENT);
+export class StatusError extends Error {
+  statusCode: number;
+  constructor(msg?: string, statusCode?: number) {
+    super(msg);
     this.name = this.constructor.name;
-    this.status = StatusCodes.BAD_REQUEST;
+    this.statusCode = statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
   }
 }
 
-export class InvalidHttpVerbError extends Error {
-  status: number;
+export class InvalidEventError extends StatusError {
   constructor(msg?: string) {
-    super(msg || ERROR_MESSAGES.INVALID_HTTP_VERB);
+    super(msg || ERROR_MESSAGES.INVALID_EVENT, StatusCodes.BAD_REQUEST);
     this.name = this.constructor.name;
-    this.status = StatusCodes.BAD_REQUEST;
+  }
+}
+
+export class InvalidHttpVerbError extends StatusError {
+  constructor(msg?: string) {
+    super(msg || ERROR_MESSAGES.INVALID_HTTP_VERB, StatusCodes.BAD_REQUEST);
+    this.name = this.constructor.name;
   }
 }
