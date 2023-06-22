@@ -1,4 +1,4 @@
-import { StatusCodes } from "./http-status-code";
+import { StatusCodes } from "./http-status-code.js";
 
 const ERROR_MESSAGES = Object.freeze({
   INVALID_EVENT: "The event is not correct (missing fields).",

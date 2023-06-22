@@ -4,19 +4,25 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "build": "rimraf ./build && tsc",
-    "dev": "npx nodemon",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Backend\" -c \"cyan.bold,green.bold\" \"yarn watch-ts\" \"yarn watch-node\"",
+    "build1": "rimraf ./build && tsc",
+    "build2": "rimraf ./build && esbuild src/index.ts --format=esm --external:@aws-sdk/* --external:@types/* --bundle --minify --sourcemap --platform=node --target=node18 --outfile=build/index.js --metafile=build/meta.json",
+    "dev1": "nodemon",
+    "dev2": "tsx watch ./src/index.ts",
+    "dev3": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Backend\" -c \"cyan.bold,green.bold\" \"yarn watch-ts\" \"yarn watch-node\"",
     "watch-ts": "tsc -w",
-    "watch-node": "nodemon build/local.js",
-    "start": "pnpm build && node build/local.js",
+    "watch-node": "nodemon build/index.js",
+    "start": "pnpm build && node build/index.js",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "release": "rimraf ./build && esbuild src/index.ts --external:@aws-sdk/* --external:@types/* --bundle --minify --sourcemap --platform=node --target=node18 --outfile=build/index.js --metafile=build/meta.json && rimraf index.zip && cd build && zip -r ../index.zip . -x .DS_Store && cd ..",
+    "release": "pnpm build2 && rimraf index.zip && cd build && zip -r ../index.zip . -x .DS_Store && cd ..",
     "aws": "pnpm release && aws lambda update-function-code --function-name HttpChatGPTLambda --zip-file fileb://index.zip"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "keywords": [],
   "author": "Jean-Christophe Baey",
+  "type": "module",
   "private": true,
   "devDependencies": {
     "@types/node": "^18.15.11",
@@ -32,13 +38,13 @@
     "rimraf": "^4.4.1",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
+    "tsx": "^3.12.7",
     "typescript": "^5.0.2"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.114",
     "@types/qs": "^6.9.7",
     "aws-lambda": "^1.0.7",
-    "aws-lambda\n": "link:@types/aws-lambda\n",
     "dotenv": "^16.0.3",
     "qs": "^6.11.1"
   }

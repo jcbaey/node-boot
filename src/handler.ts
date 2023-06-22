@@ -2,10 +2,10 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from "aws-lambda";
-import { throwIfInvalidHttpVerb, withCors } from "./lib/lambda-utils";
-import { getErrorMessage } from "./lib/error-utils";
-import { StatusError } from "./lib/errors";
-import { StatusCodes } from "./lib/http-status-code";
+import { throwIfInvalidHttpVerb, withCors } from "./lib/lambda-utils.js";
+import { getErrorMessage } from "./lib/error-utils.js";
+import { StatusError } from "./lib/errors.js";
+import { StatusCodes } from "./lib/http-status-code.js";
 
 interface JsonResponse {
   message?: string;

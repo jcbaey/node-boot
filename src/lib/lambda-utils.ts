@@ -1,7 +1,7 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from "aws-lambda";
 import qs from "qs";
 
-import { InvalidEventError, InvalidHttpVerbError } from "./errors";
+import { InvalidEventError, InvalidHttpVerbError } from "./errors.js";
 
 interface HandlerFunction {
   (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyStructuredResultV2>;

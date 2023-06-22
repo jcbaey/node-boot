@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-import { createEvent } from "./lib/lambda-utils";
-import { handler } from "./handler";
+import { createEvent } from "./lib/lambda-utils.js";
+import { handler } from "./handler.js";
 
 dotenv.config();
 
